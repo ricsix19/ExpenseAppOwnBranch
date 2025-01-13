@@ -39,6 +39,7 @@ public class Basics {
     //hozzaadas a meglevohoz
     public void addMoneyToExisting(int addMoney) {
         setStartingMoney(getStartingMoney() + addMoney); //illetve a startingMoney variable name nem biztos hogy helyt allo, de ezt majd atbeszeljuk, meg atirhatod ha gondolod
+        this.remainingMoney += addMoney;
         System.out.println("Hozzáadtunk " + addMoney + "FT összeget az eredeti összeghez.");
         //Jelenlegi osszeg nem feltetlen szukseges, ha gondolod kiveheted.
         System.out.println("Jelenlegi összeged: " + getStartingMoney() + "FT");
