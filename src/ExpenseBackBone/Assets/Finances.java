@@ -11,7 +11,7 @@ public class Finances {
 
     public Finances(int startingMoney) {
         this.startingMoney = startingMoney;
-        this.remainingMoney = remainingMoney;
+        this.remainingMoney = startingMoney;
         this.expenses = new ArrayList<>();
     }
 
@@ -39,34 +39,33 @@ public class Finances {
         this.expenses = expenses;
     }
 
+    //---------------------------------------------------
+
     //display money
     public void displayMoney(){
         System.out.println("Amount: " + getStartingMoney() + "FT");
     }
 
-    //hozzaadas a meglevohoz
+    //Adds money to existing money
     public void addMoneyToExisting(int addMoney) {
-        setStartingMoney(getStartingMoney() + addMoney); //illetve a startingMoney variable name nem biztos hogy helyt allo, de ezt majd atbeszeljuk, meg atirhatod ha gondolod
-        this.remainingMoney += addMoney;
-        System.out.println("Hozzáadtunk " + addMoney + "FT összeget az eredeti összeghez.");
-        //Jelenlegi osszeg nem feltetlen szukseges, ha gondolod kiveheted.
+        this.startingMoney += addMoney; // updating the remaining money
         updateRemainingMoney();
-        System.out.print("Jelenlegi összeged: ");
+        System.out.println("We've addded " + addMoney + " FT to the starting money");
     }
 
-    //Uj kiadas hozzaadasa
+    //Addig new Expense
     public void addExpense(String description, int amount, boolean isExistential) {
         expenses.add(new Expenses(description, amount, isExistential));
         System.out.println("Új kiadás hozzáadva: " + description + ", " + amount + "Ft, Fontos: " + (isExistential ? "Igen" : "Nem"));
         updateRemainingMoney();
     }
 
-    //osszes kiadas kiszamitasa
+    //Sum of all total expense
     public int calculateTotalExpenses(){
         return expenses.stream().mapToInt(Expenses::getAmount).sum();
     }
 
-    //TODO befezezni ezt, egyenlore a 3. caseben van benne
+    //Works, lists expenses by importance
     public void getExpensesByImportance(boolean isImportant) {
         List<Expenses> importantExpenses = expenses.stream().filter(expense -> expense.isImportant() == isImportant).collect(Collectors.toList());
         System.out.println("Important: " + importantExpenses);
@@ -74,18 +73,18 @@ public class Finances {
         System.out.println("Not important: " + notImportantExpenses);
     }
 
-    //maradek penz frissitese
+    //
     private void updateRemainingMoney() {
         this.remainingMoney = this.startingMoney - calculateTotalExpenses();
     }
 
-    //kiadasok utani maradek penz kiirasa
+    //Displays remaining money
     public void displayRemainingMoney(){
         updateRemainingMoney();
         System.out.println("Kiadasok utani maradek: " + getRemainingMoney() + " FT");
     }
 
-    //Minden kiadas
+    //Lists all expenses
     public void listAllExpenses(){
         expenses.forEach(System.out::println);
     }
