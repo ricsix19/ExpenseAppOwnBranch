@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Basics {
+public class Finances {
     private int startingMoney; //itt megadom a kezdo toket es majd getter setterekkel kezelem a Mainben
     private int remainingMoney; //egyenlore meg nem fogok vele semmit kezdeni csak definialom hogy tudjam hogy kell majd
     private List<Expenses> expenses;
 
-    public Basics(int startingMoney) {
+    public Finances(int startingMoney) {
         this.startingMoney = startingMoney;
         this.remainingMoney = remainingMoney;
         this.expenses = new ArrayList<>();
@@ -31,9 +31,17 @@ public class Basics {
         this.remainingMoney = remainingMoney;
     }
 
+    public List<Expenses> getExpenses() {
+        return expenses;
+    }
+
+    public void setExpenses(List<Expenses> expenses) {
+        this.expenses = expenses;
+    }
+
     //display money
     public void displayMoney(){
-        System.out.println("Összeged: " + getStartingMoney() + "FT");
+        System.out.println("Amount: " + getStartingMoney() + "FT");
     }
 
     //hozzaadas a meglevohoz
@@ -42,7 +50,8 @@ public class Basics {
         this.remainingMoney += addMoney;
         System.out.println("Hozzáadtunk " + addMoney + "FT összeget az eredeti összeghez.");
         //Jelenlegi osszeg nem feltetlen szukseges, ha gondolod kiveheted.
-        System.out.println("Jelenlegi összeged: " + getStartingMoney() + "FT");
+        updateRemainingMoney();
+        System.out.print("Jelenlegi összeged: ");
     }
 
     //Uj kiadas hozzaadasa
@@ -57,9 +66,12 @@ public class Basics {
         return expenses.stream().mapToInt(Expenses::getAmount).sum();
     }
 
-    //fontos nem fontos
-    public List<Expenses> getExpensesByImportance(boolean isImportant) {
-        return expenses.stream().filter(expense -> expense.isImportant() == isImportant).collect(Collectors.toList());
+    //TODO befezezni ezt, egyenlore a 3. caseben van benne
+    public void getExpensesByImportance(boolean isImportant) {
+        List<Expenses> importantExpenses = expenses.stream().filter(expense -> expense.isImportant() == isImportant).collect(Collectors.toList());
+        System.out.println("Important: " + importantExpenses);
+        List<Expenses> notImportantExpenses = expenses.stream().filter(expense -> expense.isImportant() != isImportant).collect(Collectors.toList());
+        System.out.println("Not important: " + notImportantExpenses);
     }
 
     //maradek penz frissitese
@@ -75,7 +87,6 @@ public class Basics {
 
     //Minden kiadas
     public void listAllExpenses(){
-        System.out.println("Kiadasok liastaja: ");
         expenses.forEach(System.out::println);
     }
 }
