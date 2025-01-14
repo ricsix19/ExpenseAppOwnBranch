@@ -25,6 +25,7 @@ public class Main {
         System.out.println("Welcome to our finance application! please choose an option: ");
     }
 
+    //Code Base
     public static void codeBase(){
         while(true){
             Scanner choices = new Scanner(System.in);
