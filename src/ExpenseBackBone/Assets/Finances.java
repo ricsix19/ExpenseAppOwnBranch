@@ -84,7 +84,7 @@ public class Finances {
         System.out.println("Kiadasok utani maradek: " + getRemainingMoney() + " FT");
     }
 
-    //Lists all expense
+    //Lists all expenses
     public void listAllExpenses(){
         expenses.forEach(System.out::println);
     }
