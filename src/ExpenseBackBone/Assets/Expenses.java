@@ -1,18 +1,19 @@
 package ExpenseBackBone.Assets;
 
 public class Expenses {
-    private String name;
+    private String description;
     private int amount;
     private boolean isImportant;
     //---------------------
-    public Expenses(String name, int amount, boolean isImportant) {
-        this.name = name;
+    public Expenses(String description, int amount, boolean isImportant) {
+        this.description = description;
         this.amount = amount;
         this.isImportant = isImportant;
     }
+    //Getter & Setter
     //---------------------
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
     public int getAmount() {
@@ -23,8 +24,9 @@ public class Expenses {
         return isImportant;
     }
     //---------------------
+
     @Override
     public String toString() {
-        return name + ": " + amount + " Ft, Fontos: " + (isImportant ? "Igen" : "Nem");
+        return description + ": " + amount + " Ft, Importance: " + (isImportant ? "Yes" : "No");
     }
 }

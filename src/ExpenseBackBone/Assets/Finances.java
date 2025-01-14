@@ -5,22 +5,30 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Finances {
-    private int startingMoney; //itt megadom a kezdo toket es majd getter setterekkel kezelem a Mainben
-    private int remainingMoney; //egyenlore meg nem fogok vele semmit kezdeni csak definialom hogy tudjam hogy kell majd
-    private List<Expenses> expenses;
+    private int finance;
+    //Starting money, usage in Main
 
-    public Finances(int startingMoney) {
-        this.startingMoney = startingMoney;
-        this.remainingMoney = startingMoney;
+    private int remainingMoney;
+    //Remainder of our money, gotta update it when expense hits.
+
+    private List<Expenses> expenses;
+    //Storing our expenses
+
+    //Constructor of Finances
+    //---------------------------------------------------
+    public Finances(int finance) {
+        this.finance = finance;
+        this.remainingMoney = finance;
         this.expenses = new ArrayList<>();
     }
-
-    public int getStartingMoney() {
-        return startingMoney;
+    //---------------------------------------------------
+    //Getter & Setter
+    public int getFinance() {
+        return finance;
     }
 
-    public void setStartingMoney(int startingMoney) {
-        this.startingMoney = startingMoney;
+    public void setFinance(int finance) {
+        this.finance = finance;
     }
 
     public int getRemainingMoney() {
@@ -41,22 +49,22 @@ public class Finances {
 
     //---------------------------------------------------
 
-    //display money
+    //Displays how much money we got
     public void displayMoney(){
-        System.out.println("Amount: " + getStartingMoney() + "FT");
+        System.out.println("Amount: " + getFinance() + "FT");
     }
 
     //Adds money to existing money
     public void addMoneyToExisting(int addMoney) {
-        this.startingMoney += addMoney; // updating the remaining money
-        updateRemainingMoney();
-        System.out.println("We've addded " + addMoney + " FT to the starting money");
+        this.finance += addMoney; // updating the remaining money
+        updateRemainingMoney(); //updating remaining money
+        System.out.println("We've addded " + addMoney + " Ft to the starting money");
     }
 
     //Addig new Expense
-    public void addExpense(String description, int amount, boolean isExistential) {
-        expenses.add(new Expenses(description, amount, isExistential));
-        System.out.println("Új kiadás hozzáadva: " + description + ", " + amount + "Ft, Fontos: " + (isExistential ? "Igen" : "Nem"));
+    public void addExpense(String description, int amount, boolean isImportant) {
+        expenses.add(new Expenses(description, amount, isImportant));
+        System.out.println("New expense added: " + description + ", " + amount + "Ft, Importantance: " + (isImportant ? "Igen" : "Nem"));
         updateRemainingMoney();
     }
 
@@ -67,24 +75,25 @@ public class Finances {
 
     //Works, lists expenses by importance
     public void getExpensesByImportance(boolean isImportant) {
-        List<Expenses> importantExpenses = expenses.stream().filter(expense -> expense.isImportant() == isImportant).collect(Collectors.toList());
+        List<Expenses> importantExpenses = expenses.stream().filter(expense -> expense.isImportant() == isImportant).toList();
         System.out.println("Important: " + importantExpenses);
-        List<Expenses> notImportantExpenses = expenses.stream().filter(expense -> expense.isImportant() != isImportant).collect(Collectors.toList());
+        List<Expenses> notImportantExpenses = expenses.stream().filter(expense -> expense.isImportant() != isImportant).toList();
         System.out.println("Not important: " + notImportantExpenses);
     }
 
+
     //
     private void updateRemainingMoney() {
-        this.remainingMoney = this.startingMoney - calculateTotalExpenses();
+        this.remainingMoney = this.finance - calculateTotalExpenses();
     }
 
     //Displays remaining money
     public void displayRemainingMoney(){
         updateRemainingMoney();
-        System.out.println("Kiadasok utani maradek: " + getRemainingMoney() + " FT");
+        System.out.println("Remaining money left: " + getRemainingMoney() + " FT");
     }
 
-    //Lists all expense
+    //Lists all expense and displays how much money we got
     public void listAllExpenses(){
         expenses.forEach(System.out::println);
     }
